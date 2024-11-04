@@ -2,6 +2,8 @@ package com.peregoedov.library.project.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,33 +28,36 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> findAll() {
-        return bookService.findAll();
+    public ResponseEntity<List<Book>> findAll() {
+        return ResponseEntity.ok(bookService.findAll());
     }
 
     @GetMapping("/{id}")
-    public Book findById(@PathVariable Long id) {
-        return bookService.findById(id);
+    public ResponseEntity<Book> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(bookService.findById(id));
     }
 
-    @PostMapping()
-    public Book save(@RequestBody BookDto bookDto) {
-        return bookService.save(
-                Book.builder()
-                        .title(bookDto.getTitle())
-                        .author(bookDto.getAuthor())
-                        .publishedDate(bookDto.getPublishedDate())
-                        .build());
+    @PostMapping
+    public ResponseEntity<Book> save(@RequestBody BookDto bookDto) {
+        Book savedBook = bookService.save(Book.builder()
+                .title(bookDto.getTitle())
+                .author(bookDto.getAuthor())
+                .publishedDate(bookDto.getPublishedDate())
+                .build());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
     }
 
     @PutMapping
-    public void update(@RequestBody Book book) {
-        bookService.update(book);
+    public ResponseEntity<Book> update(@RequestBody Book book) {
+        Book updatedBook = bookService.save(book);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         bookService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
