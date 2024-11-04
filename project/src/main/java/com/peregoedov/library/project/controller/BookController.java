@@ -1,6 +1,7 @@
 package com.peregoedov.library.project.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,11 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.findById(id));
+        try {
+            return ResponseEntity.ok(bookService.findById(id));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
