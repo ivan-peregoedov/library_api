@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.peregoedov.library.project.dto.BookDto;
 import com.peregoedov.library.project.model.Book;
 import com.peregoedov.library.project.service.BookService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "Book Methods")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/books")
@@ -33,8 +36,13 @@ public class BookController {
     }
 
     @PostMapping()
-    public Book save(@RequestBody Book book) {
-        return bookService.save(book);
+    public Book save(@RequestBody BookDto bookDto) {
+        return bookService.save(
+                Book.builder()
+                        .title(bookDto.getTitle())
+                        .author(bookDto.getAuthor())
+                        .publishedDate(bookDto.getPublishedDate())
+                        .build());
     }
 
     @PutMapping
