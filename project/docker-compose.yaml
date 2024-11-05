@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  app:
+    build: .
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/Lib
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRINGDOC_SWAGGER_UI_PATH=/swagger-ui-library.html
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+  db: 
+    image : postgres
+    environment:
+      - POSTGRES_DB=Lib
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345
+    ports:
+      - "8880:5432"
