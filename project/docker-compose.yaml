@@ -3,7 +3,7 @@ services:
   app:
     build: .
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/Lib
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=12345
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -15,7 +15,7 @@ services:
   db: 
     image : postgres
     environment:
-      - POSTGRES_DB=Lib
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=12345
     ports:
