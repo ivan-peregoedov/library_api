@@ -55,7 +55,7 @@ public class BookController {
 
     @PutMapping
     public ResponseEntity<Book> update(@RequestBody Book book) {
-        Book updatedBook = bookService.save(book);
+        Book updatedBook = bookService.update(book);
         return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
     }
 

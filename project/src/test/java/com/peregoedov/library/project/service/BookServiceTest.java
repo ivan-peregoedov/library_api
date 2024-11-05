@@ -1,7 +1,6 @@
 package com.peregoedov.library.project.service;
 
-import java.sql.*;
-import java.util.NoSuchElementException;
+import java.sql.Date;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.peregoedov.library.project.model.Book;
 import com.peregoedov.library.project.repository.BookRepository;
@@ -43,6 +43,6 @@ public class BookServiceTest {
     void testFindByIdNotFound() {
         Mockito.when(bookRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(NoSuchElementException.class, () -> bookService.findById(1L));
+        Assertions.assertThrows(ResponseStatusException.class, () -> bookService.findById(1L));
     }
 }
